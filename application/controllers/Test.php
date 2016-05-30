@@ -33,4 +33,10 @@ class Test extends CI_Controller{
         $data['age'] = $age;
         $this->load->view('viewtest/test', $data);
     }
+
+    public function dbtest(){
+        $this->load->database;
+        $query = $this->db->query('SELECT * FROM ks_news');
+        var_dump($query);
+    }
 }
