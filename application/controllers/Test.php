@@ -37,6 +37,8 @@ class Test extends CI_Controller{
     public function dbtest(){
         $this->load->database();
         $query = $this->db->query('SELECT * FROM ks_news');
-        var_dump($query);
+        foreach ($query->result() as $row){
+            print_r($row);
+        }
     }
 }
