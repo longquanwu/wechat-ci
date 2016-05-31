@@ -6,19 +6,20 @@
  */
 class Reply extends CI_Controller{
 
-    public function _remap( $methed, $params = []){
-        switch ($methed){
-            case 'girl':
-                echo 'PARAMS->';
-                print_r($params);
-                $this->replygirl();
-                break;
-            default:
-                echo 'CANT SEARCH METHED';
+    public function _remap( $method, $params = []){
+        $method = trim($method);
+        if (method_exists($this, $method)){
+            return call_user_func_array([$this, $method], $params);
+        }else{
+            echo 'CANT SEARCH THIS METHOD ->'.$method;
         }
     }
 
-    public function replygirl(){
-        echo 'THIS IS REDIR METHOD';
+    public function girl($name, $age){
+        echo 'THIS GIRL '.$name.' IS '.$age;
+    }
+
+    public function boy($name, $age, $height){
+        echo $name.' 今年 '.$age.' 岁了,身高 '.$height.'CM';
     }
 }
