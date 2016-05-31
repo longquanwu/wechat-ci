@@ -21,7 +21,7 @@ class Reply extends CI_Controller{
 
     public function boy($name, $age, $height){
         $str = $name.' 今年 '.$age.' 岁了,身高 '.$height.'CM';
-        $this->load->view('reply/boy', $str);
+        $this->load->view('user/reply/boy', $str);
     }
 
     public function _output($data){
