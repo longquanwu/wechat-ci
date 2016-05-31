@@ -41,4 +41,8 @@ class Test extends CI_Controller{
             print_r($row);
         }
     }
+
+    public function seaslog(){
+        var_dump(SEASLOG_DEBUG,SEASLOG_INFO,SEASLOG_NOTICE);
+    }
 }
