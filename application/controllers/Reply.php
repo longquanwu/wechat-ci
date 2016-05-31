@@ -6,7 +6,7 @@
  */
 class Reply extends CI_Controller{
 
-    public function _remap( $method, $params = []){
+    public function _remap($method, $params = []){
         $method = trim($method);
         if (method_exists($this, $method)){
             return call_user_func_array([$this, $method], $params);
@@ -21,5 +21,9 @@ class Reply extends CI_Controller{
 
     public function boy($name, $age, $height){
         echo $name.' 今年 '.$age.' 岁了,身高 '.$height.'CM';
+    }
+
+    public function _output($data){
+        echo '_OUTPUT:'.$data;
     }
 }
