@@ -1,10 +1,10 @@
 <?php
 /**
- * Log.php
+ * Logger.php
  * User: wlq314@qq.com
  * Date: 16/6/1 Time: 09:52
  */
-class Log extends CI_Controller{
+class Logger extends CI_Controller{
     
     private $_basepath;
     private $_logger;
