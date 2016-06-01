@@ -12,6 +12,7 @@ class Seaslog extends CI_Controller{
     {
         parent::__construct();
         $this->_basepath = '/data/logs/seaslog/';
+        Seaslog::setbasepath($this->_basepath);
     }
 
     public function setbasepath($path){
