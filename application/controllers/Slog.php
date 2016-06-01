@@ -1,10 +1,10 @@
 <?php
 /**
- * Seaslog.php
+ * Slog.php
  * User: wlq314@qq.com
  * Date: 16/6/1 Time: 09:52
  */
-class Seaslog extends CI_Controller{
+class Slog extends CI_Controller{
     
     private $_basepath;
     
