@@ -28,8 +28,8 @@ class Log extends CI_Controller{
      * @param array $content
      * @param string $module
      */
-    public function debug($message, array $content = [], $module = ''){
-        return SeasLog::debug($message, $content, $module);
+    public function debug($message){
+        return SeasLog::debug($message);
     }
 
     public function log($content){
