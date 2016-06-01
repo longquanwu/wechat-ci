@@ -29,10 +29,10 @@ class Logger extends CI_Controller{
      * @param string $module
      */
     public function debug($message){
-        return SeasLog::debug($message);
+        SeasLog::debug($message);
     }
 
     public function log($content){
-        return Seaslog::info($content);
+        Seaslog::info($content);
     }
 }
