@@ -16,6 +16,11 @@ class Reply extends CI_Controller{
     }
 
     public function girl($name, $age){
+        try{
+            $this->girl(name);
+        }catch (Exception $e){
+            echo $e->getMessage();
+        }
         echo 'THIS GIRL '.$name.' IS '.$age;
     }
 
