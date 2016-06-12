@@ -8,8 +8,7 @@
 class Wechat extends MY_Controller{
     
     public function index(){
-        $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
-        var_dump($postArr);
+        $postArr = $GLOBALS['HTTP_RAW_POST_DATA'] ? $GLOBALS['HTTP_RAW_POST_DATA'] : ['空POST'];
         SeasLog::info("访问信息", $postArr);
         $this->checkweixin();
     }
