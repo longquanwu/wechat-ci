@@ -7,8 +7,11 @@
 
 abstract class MY_Controller extends CI_Controller{
     
+    private $log;
+    
     public function __construct(){
-        
+        parent::__construct();
+        $this->log = new SeasLog;
     }
 
 }
