@@ -8,8 +8,8 @@
 class Wechat extends MY_Controller{
     
     public function index(){
-        echo 1234;
         print_r($this->config);
+        print_r($this->config->item('wechat'));
 
     }
 
