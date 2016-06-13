@@ -5,7 +5,13 @@
  * Date: 16/5/30 Time: 12:06
  */
 
-class Test extends CI_Controller{
+class Test extends MY_Controller{
+    
+    public function log(){
+        echo '开始new log test->';
+        echo $this->logger->alert('new logger test');
+    }
+    
     /**
      * @param string $name
      * @param string $content

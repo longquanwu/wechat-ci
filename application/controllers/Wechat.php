@@ -6,15 +6,21 @@
  */
 
 class Wechat extends MY_Controller{
-    
+
+    /**
+     * 微信入口
+     */
     public function index(){
-        $postArr = $GLOBALS['HTTP_RAW_POST_DATA'] ? $GLOBALS['HTTP_RAW_POST_DATA'] : ['空POST'];
+        $postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
         SeasLog::debug("请求POST信息:".var_export($postArr, true));
         SeasLog::debug("请求GET信息:".var_export($_GET, true));
         $this->checkweixin();
     }
 
-    //验证微信TOKEN
+    /**
+     * 验证微信TOKEN
+     * @return bool
+     */
     private function checkweixin(){
         $wechatInfo = $this->config->item('wechat');
         
@@ -26,8 +32,7 @@ class Wechat extends MY_Controller{
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
-        SeasLog::debug($tmpStr . '==?' . $signature);
-        
+
         if( $tmpStr == $signature ){
             //第一次验证需要ECHO
             if ( isset($_GET['echostr']) ){

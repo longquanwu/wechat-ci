@@ -516,6 +516,13 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
+//微信配置
 $config['wechat'] = [
     'token' => 'wlq',
+];
+
+//自定义日志配置
+$config['logger'] = [
+    'basepath' => '/data/logs/',  //日志目录
+    'logger' => 'wechat-ci',  //日志文件夹
 ];

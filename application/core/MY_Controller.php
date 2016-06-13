@@ -7,13 +7,12 @@
 
 abstract class MY_Controller extends CI_Controller{
     
-    private $_basepath = '/data/logs/';
-    private $_logger = 'wechat-ci';
+    /** @var  Logger $logger */
+    protected $logger;
     
     public function __construct(){
         parent::__construct();
-        Seaslog::setbasepath($this->_basepath);
-        SeasLog::setLogger($this->_logger);
+        $this->load->library('Logger', [$this->config->item['logger']]);
     }
-    
+
 }
