@@ -10,6 +10,7 @@ class Test extends MY_Controller{
     public function log(){
         echo '开始new log test->';
         echo $this->logger->warning('new logger test');
+        echo $this->logger->debug('new log testtttt');
     }
     
     /**
