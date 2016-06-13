@@ -26,7 +26,8 @@ class Wechat extends MY_Controller{
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
-
+        SeasLog::debug($tmpStr . '==?' . $signature);
+        
         if( $tmpStr == $signature ){
             //第一次验证需要ECHO
             if ( isset($_GET['echostr']) ){
