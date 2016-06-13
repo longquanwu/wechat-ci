@@ -8,7 +8,7 @@
 abstract class MY_Controller extends CI_Controller{
     
     /** @var  Logger $logger */
-    protected $logger;
+    public $logger;
     
     public function __construct(){
         parent::__construct();
