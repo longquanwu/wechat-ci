@@ -7,6 +7,14 @@
 
 class Wechat extends MY_Controller{
 
+    const TEXT = '<xml><ToUserName><![CDATA[gh_89fd7c49a140]]></ToUserName>
+        <FromUserName><![CDATA[oTRnEvp99idL-IBkUpDsrT4za6UA]]></FromUserName>
+        <CreateTime>1466046551</CreateTime>
+        <MsgType><![CDATA[text]]></MsgType>
+        <Content><![CDATA[你好～]]></Content>
+        <MsgId>6296621991369288861</MsgId>
+        </xml>';
+
     const MSG_TYPE_TEXT = 'text';
     const MSG_TYPE_IMAGE = 'image';
     const MSG_TYPE_VOICE = 'voice';
@@ -18,30 +26,24 @@ class Wechat extends MY_Controller{
     const EVENT_TYPE_SUBSCRIBE = 'subscribe';
     const EVENT_TYPE_UNSUBSCRIBE = 'unsubscribe';
 
+    /** @var  Wechat_model $wechat_model */
+    public $wechat_model;
     
-    public $apiUrl = [
-        //获得access_token
-        'access_token' => "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s",
-        //获得微信服务器地址
-        'ip_list' => "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=%s",
-        //自定义菜单
-        'menu_create' => "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s",
-        //获得自定义菜单
-        'menu_get' => "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=%s",
-        //删除全部自定义菜单
-        'menu_delete' => "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=%s",
-        //创建个性化菜单
-        'menu_addconditional' => "https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=%s",
-        //根据用户openId获得用户基本信息
-        'user_info' => "https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN",
-    ];
+    /** @var  WechatLib $wechatlib */
+    public $wechatlib;
+    
+    public function __construct(){
+        parent::__construct();
+//        $this->load->model('wechat/wechat_model');
+        $this->load->library('WechatLib');
+    }
 
     /**
      * 微信入口
      */
     public function index(){
         $_GET && $this->logger->info('GET信息:' . var_export($_GET, true));
-        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $postStr = empty($GLOBALS['HTTP_RAW_POST_DATA']) ? '' : $GLOBALS['HTTP_RAW_POST_DATA'];
         if ( !empty($postStr) ){
             $this->logger->info('POST信息:' . var_export($postStr, true));
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -80,9 +82,9 @@ class Wechat extends MY_Controller{
     private function checkweixin(){
         $token = $this->config->item('wechat')['token'];
         
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce     = $_GET["nonce"];
+        $signature = empty($_GET["signature"]) ? '' : $_GET["signature"];
+        $timestamp = empty($_GET["timestamp"]) ? '' : $_GET["timestamp"];
+        $nonce     = empty($_GET["nonce"]) ? '' : $_GET["nonce"];
 
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);

@@ -519,6 +519,8 @@ $config['proxy_ips'] = '';
 //微信配置
 $config['wechat'] = [
     'token' => 'wlq',
+    'appID' => 'wxbb7a4aef74ef0b76',
+    'appSecret' => 'd4624c36b6795d1d99dcf0547af5443d',
 ];
 
 //自定义日志配置
