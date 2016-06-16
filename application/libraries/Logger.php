@@ -7,8 +7,13 @@
 
 class Logger{
 
+    /**
+     * Logger constructor.
+     * @param array $loggerInfo
+     * $loggerInfo 的格式 ['basepath' => 'somepath', 'logger' => 'somedir'] 
+     */
     public function __construct(array $loggerInfo){
-        Seaslog::setbasepath($loggerInfo['basepath']);
+        SeasLog::setBasePath($loggerInfo['basepath']);
         SeasLog::setLogger($loggerInfo['logger']);
     }
 
@@ -18,7 +23,7 @@ class Logger{
      * @param string $module
      */
     public function debug($message, array $content = [], $module = ''){
-        return SeasLog::debug("\n".$message, $content, $module);
+        return SeasLog::debug($message."\n", $content, $module);
     }
 
     /**
@@ -27,7 +32,7 @@ class Logger{
      * @param string $module
      */
     public function info($message, array $content = [], $module = ''){
-        return SeasLog::info("\n".$message, $content, $module);
+        return SeasLog::info($message."\n", $content, $module);
     }
 
     /**
@@ -36,7 +41,7 @@ class Logger{
      * @param string $module
      */
     public function notice($message, array $content = [], $module = ''){
-        return SeasLog::notice("\n".$message, $content, $module);
+        return SeasLog::notice($message."\n", $content, $module);
     }
 
     /**
@@ -45,7 +50,7 @@ class Logger{
      * @param string $module
      */
     public function warning($message, array $content = [], $module = ''){
-        return SeasLog::warning("\n".$message, $content, $module);
+        return SeasLog::warning($message."\n", $content, $module);
     }
 
     /**
@@ -54,7 +59,7 @@ class Logger{
      * @param string $module
      */
     public function error($message, array $content = [], $module = ''){
-        return SeasLog::error("\n".$message, $content, $module);
+        return SeasLog::error($message."\n", $content, $module);
     }
 
     /**
@@ -63,7 +68,7 @@ class Logger{
      * @param string $module
      */
     public function critical($message, array $content = [], $module = ''){
-        return SeasLog::critical("\n".$message, $content, $module);
+        return SeasLog::critical($message."\n", $content, $module);
     }
 
     /**
@@ -72,7 +77,7 @@ class Logger{
      * @param string $module
      */
     public function alert($message, array $content = [], $module = ''){
-        return SeasLog::alert("\n".$message, $content, $module);
+        return SeasLog::alert($message."\n", $content, $module);
     }
 
     /**
@@ -81,7 +86,7 @@ class Logger{
      * @param string $module
      */
     public function emergency($message, array $content = [], $module = ''){
-        return SeasLog::emergency("\n".$message, $content, $module);
+        return SeasLog::emergency($message."\n", $content, $module);
     }
 
     /**
@@ -91,7 +96,7 @@ class Logger{
      * @param string $module
      */
     public function log($level, $message, array $content = [], $module = ''){
-        return SeasLog::log($level, "\n".$message, $content, $module);
+        return SeasLog::log($level, $message."\n", $content, $module);
     }
 
 }

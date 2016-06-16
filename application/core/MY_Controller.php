@@ -12,7 +12,8 @@ abstract class MY_Controller extends CI_Controller{
     
     public function __construct(){
         parent::__construct();
-        $this->load->library('Logger', [$this->config->item['logger']]);
+        //读取日志模块
+        $this->load->library('Logger', $this->config->item('logger'));
     }
 
 }
