@@ -6,11 +6,11 @@
  */
 
 class WechatLib{
-    
-    private $CI;
 
     /** @var  Logger $logger */
     public $logger;
+
+    private $CI;
 
     private $appId;
 
@@ -44,37 +44,36 @@ class WechatLib{
         $this->logger = $this->CI->logger;
     }
 
+    /**
+     * 获得accessToken
+     * @return mixed
+     */
     public function getAccessToken(){
-        $this->CI->load->model('wechat/AccessToken_model');
-        
-        /** @var AccessToken_model $accessTokenModel */
-        $accessTokenModel = $this->CI->AccessToken_model;
-        $accessTokenInfo = $accessTokenModel->getAccessToken();
-        $res = $accessTokenInfo['token'];
-        
-        //如果没有拿到accessToken的值或者accessToken已经过期,从微信获取新的accessToken值并保存到数据库
-        if (empty($accessTokenInfo) || $accessTokenInfo['due_time'] < time()){
-            $url = sprintf($this->apiUrl['access_token'], $this->appId, $this->secret);
-            $resJson = curl($url);
-            $this->logger->info('从微信获取新AccessToken:'.$resJson);
-            !empty($resJson) && $resArr = json_decode($resJson, true);
-            $data = [
-                'token' => $resArr['access_token'],
-                'due_time' => time() + $resArr['expires_in'] - 200,
-            ];
-
-            //没拿到accessToken值则写入一条新数据,否则更新数据
-            if (empty($accessTokenInfo)){
-                $accessTokenModel->addAccessToken($data);
-            }else{
-                $accessTokenModel->updateAccessToken($data);
-            }
-            $res = $resArr['access_token'];
+        $url = sprintf($this->apiUrl['access_token'], $this->appId, $this->secret);
+        $resJson = curl($url);
+        $this->logger->info('从微信获取新AccessToken:'.$resJson);
+        if (empty($resJson)){
+            return [];
+        }else{
+            return json_decode($resJson, true);
         }
-        return $res;
     }
 
-    public function getUserInfoByUserOpenId(){
-        $accessToken = $this->getAccessToken();
+    /**
+     * 根据OpenId获取用户信息
+     * @param $accessToken
+     * @param $openId
+     * @return array|mixed
+     */
+    public function getUserInfoByOpenId($accessToken, $openId){
+        $url = sprintf($this->apiUrl['user_info'], $accessToken, $openId);
+        $resJson = curl($url);
+        $this->logger->info("根据用户OpenId {$openId} 从微信获取用户信息:" . $resJson);
+        if (empty($resJson)){
+            return [];
+        }else {
+            return json_decode($resJson, true);
+        }
     }
+
 }

@@ -45,7 +45,7 @@ class AccessToken_model extends MY_Model{
      * @param $id
      * @return mixed
      */
-    public function updateAccessToken(array $data, $id){
+    public function updateAccessToken(array $data, $id = 1){
         return $this->updateById($id, $data);
     }
 

@@ -32,9 +32,10 @@ class Wechat extends MY_Controller{
     /** @var  WechatLib $wechatlib */
     public $wechatlib;
     
+    public $userOpenId;
+    
     public function __construct(){
         parent::__construct();
-//        $this->load->model('wechat/wechat_model');
         $this->load->library('WechatLib');
     }
 
@@ -44,13 +45,18 @@ class Wechat extends MY_Controller{
     public function index(){
         $_GET && $this->logger->info('GET信息:' . var_export($_GET, true));
         $postStr = empty($GLOBALS['HTTP_RAW_POST_DATA']) ? '' : $GLOBALS['HTTP_RAW_POST_DATA'];
+        
         if ( !empty($postStr) ){
             $this->logger->info('POST信息:' . var_export($postStr, true));
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
         }
         $this->checkweixin();
+        $this->userOpenId = $postObj->FromUserName;
+        $this->saveUserInfo($this->userOpenId);
+        
         switch ( $postObj->MsgType ){
             case self::MSG_TYPE_TEXT:
+                $result = $this->executeText();
                 break;
             case self::MSG_TYPE_IMAGE:
                 break;
@@ -71,10 +77,6 @@ class Wechat extends MY_Controller{
         $postObj->FromUserName;
     }
     
-    private function execute(){
-        
-    }
-
     /**
      * 验证微信TOKEN
      * @return bool
@@ -101,5 +103,73 @@ class Wechat extends MY_Controller{
         }else{
             die('请通过微信平台访问');
         }
+    }
+
+    /**
+     * 保存访客信息到数据库
+     * @param $openId
+     * @return bool
+     */
+    private function saveUserInfo($openId){
+        $this->load->model('wechat/User_model');
+        /** @var User_model $userModel */
+        $userModel = $this->User_model;
+        
+        if ($userModel->isExistByOpenId($openId)){
+            return true;
+        }else{
+            $userInfo = $this->wechatlib->getUserInfoByOpenId($this->getAccessToken(), $openId);
+            $data = [
+                'open_id' => $userInfo['openid'],
+                'nick_name' => $userInfo['nickname'],
+                'icon' => $userInfo['headimgurl'],
+                'sex' => $userInfo['sex'],
+                'city' => $userInfo['city'],
+                'province' => $userInfo['province'],
+                'language' => $userInfo['language'],
+                'sub_time' => $userInfo['subscribe_time'],
+                'status' => 1,
+            ];
+            if ($userModel->addNewUser($data)){
+                $this->logger->info('新用户信息成功保存到到数据库');
+            }else{
+                $this->logger->error('新用户信息保存到到数据库 失败! ');
+            }
+        }
+    }
+
+    /**
+     * 获得AccessToken
+     * @return mixed
+     */
+    private function getAccessToken(){
+        $this->load->model('wechat/AccessToken_model');
+        /** @var AccessToken_model $accessTokenModel */
+        $accessTokenModel = $this->AccessToken_model;
+        
+        $accessTokenInfo = $accessTokenModel->getAccessToken();
+        $res = $accessTokenInfo['token'];
+
+        //如果没有拿到accessToken的值或者accessToken已经过期,从微信获取新的accessToken值并保存到数据库
+        if (empty($res) || $accessTokenInfo['due_time'] < time()) {
+            $accessTokenInfo = $this->wechatlib->getAccessToken();
+            $data = [
+                'token' => $accessTokenInfo['access_token'],
+                'due_time' => time() + $accessTokenInfo['expires_in'] - 200,
+            ];
+
+            //没拿到accessToken值则写入一条新数据,否则更新数据
+            if (empty($res)) {
+                $accessTokenModel->addAccessToken($data);
+            } else {
+                $accessTokenModel->updateAccessToken($data);
+            }
+            $res = $accessTokenInfo['access_token'];
+        }
+        return $res;
+    }
+    
+    private function executeText(){
+        
     }
 }
