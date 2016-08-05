@@ -519,10 +519,23 @@ $config['proxy_ips'] = '';
 //微信配置
 $config['wechat'] = [
     'token' => 'wlq',
+    'appID' => 'wxbb7a4aef74ef0b76',
+    'appSecret' => 'd4624c36b6795d1d99dcf0547af5443d',
 ];
 
 //自定义日志配置
 $config['logger'] = [
     'basepath' => '/data/logs/',  //日志目录
     'logger' => 'wechat-ci',  //日志文件夹
+];
+
+$config['mq'] = [
+    'config' => [
+        'host' => 'localhost',
+        'port' => '5672',
+        'login' => 'guest',
+        'password' => 'guest',
+        'vhost'=>'/'
+    ],
+    'e_name' => 'wlq',
 ];
