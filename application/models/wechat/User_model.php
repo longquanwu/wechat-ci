@@ -11,12 +11,10 @@ class User_model extends MY_Model{
     const STATUS_DELETE = 0;
 
     public function setPrimary(){
-        // TODO: Implement setPrimary() method.
         return 'id';
     }
 
     public function setTableName(){
-        // TODO: Implement setTableName() method.
         return 'wechat_user';
     }
 

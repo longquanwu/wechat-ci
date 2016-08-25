@@ -12,12 +12,10 @@ class AccessToken_model extends MY_Model{
     }
 
     public function setPrimary(){
-        // TODO: Implement setPrimary() method.
         return 'id';
     }
 
     public function setTableName(){
-        // TODO: Implement setTableName() method.
         return 'access_token';
     }
 

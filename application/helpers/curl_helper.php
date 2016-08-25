@@ -5,10 +5,6 @@
  * Date: 16/6/16 Time: 10:53
  */
 
-/**
- * @param $url
- * @return mixed
- */
 function curl($url){
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -38,7 +34,6 @@ function curl($url){
  * @param string $url 提交地址
  * @param array | string $postData 数组数据或编码后的字符串
  * @return mixed
- * @throws Exception
  * @deprecated
  */
 function post($url, $postData){
