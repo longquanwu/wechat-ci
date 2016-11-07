@@ -19,17 +19,12 @@ abstract class MY_Model extends CI_Model{
     //从数据库
     private $sdb;
     
-    /** @var  Logger $logger */
-    public $logger;
-    
     public function __construct(){
         parent::__construct();
         $this->mdb = $this->load->database('default', true);
         $this->sdb = $this->load->database('default', true);
         $this->_table = $this->setTableName();
         $this->_primary = $this->setPrimary();
-        //加载日志类
-        $this->load->library('Logger', $this->config->item('logger'));
     }
     
     abstract protected function setTableName();
@@ -198,22 +193,5 @@ abstract class MY_Model extends CI_Model{
         $db->limit(1);
         return $db->count_all_results() ? TRUE : FALSE;
     }
-
-//    /**
-//     * 将对象转成数组
-//     * @param Object $obj
-//     * @return array
-//     */
-//    private function object_2_array($obj){
-//        $result = [];
-//        foreach ($obj as $k => $v) {
-//            if (gettype($v) == 'array' || gettype($v) == 'object'){
-//                $result[$k] = $this->object_2_array($v);
-//            }else{
-//                $result[$k] = $v;
-//            }
-//        }
-//        return $result;
-//    }
 
 }

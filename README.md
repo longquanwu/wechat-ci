@@ -1,3 +1,2 @@
-基于CI框架的wechat公众号
-学习使用
-本项目中使用到了SeasLog,不支持SeasLog的请自行编译拓展
+基于CI框架的wechat公众号 学习使用
+本项目中使用到了SeasLog,RabbitMQ 不支持SeasLog,RabbitMQ的请自行编译拓展

@@ -521,6 +521,7 @@ $config['wechat'] = [
     'token' => 'wlq',
     'appID' => 'wxbb7a4aef74ef0b76',
     'appSecret' => 'd4624c36b6795d1d99dcf0547af5443d',
+    'name' => 'gh_89fd7c49a140',
 ];
 
 //自定义日志配置
@@ -538,4 +539,15 @@ $config['mq'] = [
         'vhost'=>'/'
     ],
     'e_name' => 'wlq',
+];
+
+/**
+ * 邮箱配置
+ */
+$config['email'] = [
+    'host' => 'smtp.qq.com',  //邮箱的服务器地址
+    'name' => '故宫展览',  //发件人姓名（昵称） 任意内容，显示在收件人邮件的发件人邮箱地址前的发件人姓名
+    'from' => 'wlq314@qq.com',  //发件人邮箱地址
+    'username' => '294556942',  //登录账号
+    'password' => 'qpamncvsqujnbged',  //登录密码(注:如果是QQ邮箱,不是指登录密码,而是授权的登录密码)
 ];
